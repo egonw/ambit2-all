@@ -1,0 +1,57 @@
+{
+    "study": [
+        {
+            "owner" : {
+            	"substance" : {
+            		"uuid" : "IUC4-efdb21bb-e79f-3286-a988-b6f6944d3734"
+            	}	            		
+            },
+            "effects_to_delete": [
+                {
+                    "result": {
+                        "idresult" : 1,
+                        "deleted" : true,
+                        "remarks" : "the reason to delete"
+                    }
+                },
+                {
+                    "result": {
+                        "idresult" : 2,
+                        "deleted" : true,
+                        "remarks" : "the reason to delete"
+                    }
+                }
+            ]
+        },
+        {
+            "owner" : {
+            	"substance" : {
+            		"uuid" : "IUC4-efdb21bb-e79f-3286-a988-b6f6944d3734"
+            	}            	
+            },            
+            "effects_to_delete": [
+                {
+                    "result": {
+                        "idresult" : 1,
+                        "deleted" : true,
+                        "remarks" : "the reason to delete"
+                    }
+                },
+                {
+                    "result": {
+                        "idresult" : 2,
+                        "deleted" : true,
+                        "remarks" : "the reason to delete"
+                    }
+                },
+                {
+                	"result": {
+                        "idresult" : "IUC4-7adb0d03-f69b-32a9-9efe-86b4a8577893",
+                        "deleted" : true,
+                        "remarks" : "test for deleting interpretation_result given document_uuid"
+                    }
+                }
+            ]
+        }
+  ]   
+}

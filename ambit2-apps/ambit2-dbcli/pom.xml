@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>ambit2-apps</artifactId>
+		<groupId>ambit</groupId>
+		<version>3.0.3-SNAPSHOT</version>
+	</parent>
+	<artifactId>ambit2-dbcli</artifactId>
+	<name>ambit2-dbcli</name>
+	<inceptionYear>2014</inceptionYear>
+	<dependencies>
+		<!-- <dependency> <groupId>net.ideaconsult.restnet</groupId> <artifactId>restnet-db</artifactId> 
+			<version>${restnet.version}</version> </dependency> -->
+		<dependency>
+			<groupId>ambit</groupId>
+			<artifactId>ambit2-db</artifactId>
+			<version>${ambit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ambit</groupId>
+			<artifactId>ambit2-fp</artifactId>
+			<version>${ambit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ambit</groupId>
+			<artifactId>ambit2-tautomers</artifactId>
+			<version>${ambit.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ambit</groupId>
+			<artifactId>ambit2-fp</artifactId>
+			<version>${ambit.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ambit</groupId>
+			<artifactId>ambit2-db</artifactId>
+			<version>${project.version}</version>
+			<classifier>tests</classifier>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+	</dependencies>
+	<licenses>
+		<license>
+			<name>LGPL</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+			<distribution>repo</distribution>
+			<comments>LGPL 2</comments>
+		</license>
+	</licenses>
+	<build>
+		<finalName>ambitcli-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <version>2.6</version> 
+				<executions> <execution> <id>create-executable-jar</id> <phase>package</phase> 
+				<goals> <goal>single</goal> </goals> <configuration> <finalName>ambitcli-${ambit.version}</finalName> 
+				<descriptorRefs> <descriptorRef> jar-with-dependencies </descriptorRef> </descriptorRefs> 
+				<archive> <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
+				</archive> </configuration> </execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.2</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>ambit2.dbcli.AmbitCli</Main-Class>
+										<Build-Number>${buildNumber}</Build-Number>
+										<Package-Vendor>Ideaconsult Ltd.</Package-Vendor>
+										<Package-Version>${project.version}</Package-Version>
+										<Package>ambit2.dbcli</Package>
+										<Implementation-Build>${buildNumber}</Implementation-Build>
+										<url>http://ambit.sourceforge.net/download_ambitcli.html</url>
+
+									</manifestEntries>
+								</transformer>
+							</transformers>
+							<doCheck>true</doCheck>
+							<doUpdate>true</doUpdate>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>create</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<revisionOnScmFailure>-${maven.build.timestamp}</revisionOnScmFailure>
+						<doCheck>false</doCheck>
+						<doUpdate>false</doUpdate>
+						<getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+						<locale>US</locale>
+						<providerImplementations>
+							<svn>javasvn</svn>
+						</providerImplementations>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.google.code.maven-scm-provider-svnjava</groupId>
+							<artifactId>maven-scm-provider-svnjava</artifactId>
+							<version>2.0.2</version>
+						</dependency>
+						<dependency>
+							<groupId>org.tmatesoft.svnkit</groupId>
+							<artifactId>svnkit</artifactId>
+							<version>1.8.3-1</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<properties>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+	</properties>
+	<description>http://ambit.sourceforge.net/download_ambitcli.html</description>
+	<url>http://ambit.sourceforge.net/download_ambitcli.html</url>
+</project>
